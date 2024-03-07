@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binomial Distribution</title>
+</head>
+<body>
+
+<h2>Binomial Distribution</h2>
+
+<!-- Python code embedded in HTML -->
+<pre>
+<code>
+from scipy.stats import binom
+
+# Calculate binomial probability
+binom.pmf(k=10, n=12, p=0.6)
+
+# Calculate binomial probability for at least x cases
+binom.cdf(k=2, n=5, p=0.5)
+
+# Organize binomial distribution value list
+# Setting the values
+n = 12
+p = 0.6
+# Defining the list of r values
+r_values = list(range(n + 1))
+# Obtaining the mean and variance
+mean, var = binom.stats(n, p)
+# List of pmf values
+dist = [binom.pmf(r, n, p) for r in r_values ]
+# Printing the table
+print("r\tp(r)")
+for i in range(n + 1):
+    print(str(r_values[i]) + "\t" + str(dist[i]))
+# Printing mean and variance
+print("mean = "+str(mean))
+print("variance = "+str(var))
+
+# Graph the distribution
+import matplotlib.pyplot as plt
+# Setting the values
+# of n and p
+n = 12
+p = 0.6
+# Defining list of r values
+r_values = list(range(n + 1))
+# List of pmf values
+dist = [binom.pmf(r, n, p) for r in r_values ]
+# Plotting the graph
+plt.bar(r_values, dist)
+plt.show()
+</code>
+</pre>
+
+</body>
+</html>
