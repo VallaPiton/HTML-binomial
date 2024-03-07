@@ -3,57 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Binomial Distribution</title>
+    <title>Binomial Distribution Calculator</title>
 </head>
 <body>
 
-<h2>Binomial Distribution</h2>
+<h2>Binomial Distribution Calculator</h2>
+
+<form id="binomialForm">
+    <label for="n">Number of Trials (n):</label>
+    <input type="number" id="n" required>
+    <br>
+    
+    <label for="p">Probability of Success (p):</label>
+    <input type="number" id="p" step="0.01" required>
+    <br>
+    
+    <label for="k">Number of Successes (k):</label>
+    <input type="number" id="k" required>
+    <br>
+    
+    <button type="button" onclick="calculateBinomial()">Calculate</button>
+</form>
 
 <!-- Display the results here -->
 <div id="results"></div>
 
 <script>
-// Python code translated to JavaScript
+// Function to calculate binomial distribution
 function calculateBinomial() {
+    const n = parseFloat(document.getElementById('n').value);
+    const p = parseFloat(document.getElementById('p').value);
+    const k = parseInt(document.getElementById('k').value);
+
+    if (isNaN(n) || isNaN(p) || isNaN(k) || n < 0 || p < 0 || p > 1 || k < 0 || k > n) {
+        alert("Please enter valid values for n, p, and k.");
+        return;
+    }
+
     const binom = require('mathjs').binom;  // Assuming mathjs library for binomial calculations
 
     // Calculate binomial probability
-    const probability1 = binom.pmf(10, 12, 0.6);
-
-    // Calculate binomial probability for at least x cases
-    const probability2 = binom.cdf(2, 5, 0.5);
-
-    // Organize binomial distribution value list
-    // Setting the values
-    const n = 12;
-    const p = 0.6;
-    // Defining the list of r values
-    const r_values = Array.from({ length: n + 1 }, (_, i) => i);
-    // Obtaining the mean and variance
-    const { mean, variance } = binom.stats(n, p);
-    // List of pmf values
-    const dist = r_values.map(r => binom.pmf(r, n, p));
+    const probability = binom.pmf(k, n, p);
 
     // Display the results
-    let resultsHTML = `
-        <p>Binomial Probability: ${probability1}</p>
-        <p>Binomial Probability (at least 2 cases): ${probability2}</p>
-        <table>
-            <tr><th>r</th><th>p(r)</th></tr>
-    `;
-    for (let i = 0; i <= n; i++) {
-        resultsHTML += `<tr><td>${r_values[i]}</td><td>${dist[i]}</td></tr>`;
-    }
-    resultsHTML += `</table>
-        <p>Mean: ${mean}</p>
-        <p>Variance: ${variance}</p>
+    const resultsHTML = `
+        <p>Binomial Probability: ${probability}</p>
     `;
 
     document.getElementById('results').innerHTML = resultsHTML;
 }
-
-// Call the function when the page loads
-calculateBinomial();
 </script>
 
 </body>
